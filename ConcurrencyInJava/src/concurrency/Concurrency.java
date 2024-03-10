@@ -28,6 +28,10 @@ package concurrency;
 // class with the main method to execute the program
 public class Concurrency {
 	public static void main(String[] args) {
+		
+		// take note of the start time of the program
+		long start = System.nanoTime();
+		
 		// create a counter object
 		Counter counter = new Counter();
 		// create the two threads that will use the counter object
@@ -44,7 +48,14 @@ public class Concurrency {
 		try {
 			thread2.join();
 		} catch(InterruptedException e) {}
+		
+		// take note of the end time of the program
+		long finish = System.nanoTime();
 
+		// calculate the elapse time
+		long timeElapsed = finish - start;
+		
+		System.out.println("Time the program took to run: " + timeElapsed/1000 + " microseconds");
 	}
 }
 

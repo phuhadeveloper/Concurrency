@@ -23,6 +23,9 @@
 #include<thread>
 #include<mutex>
 #include<condition_variable>
+#include<chrono>
+
+using namespace std::chrono;
 
 std::mutex mtx; // create the mutex variable
 std::condition_variable cv; // this variable allows threads to communicate
@@ -61,6 +64,9 @@ void countToZero()
 
 int main()
 {
+	// record starting time of program
+	auto start = high_resolution_clock::now();
+
 	// create thread 1 and 2
 	std::thread t1(countToTwenty);
 	std::thread t2(countToZero);
@@ -68,6 +74,17 @@ int main()
 	// wait for both thread to finish
 	t1.join();
 	t2.join();
+
+	// record ending time of program
+	auto stop = high_resolution_clock::now();
+
+	// calculate time of program
+	auto duration = duration_cast<microseconds>(stop - start);
+
+	// print out the time program need to take
+	std::cout << "Time taken by function: "
+	         << duration.count() << " microseconds" << std::endl;
+
 	return 0;
 }
 
